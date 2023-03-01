@@ -3,6 +3,7 @@ from rest_framework import serializers
 from profiles.models import Profiles
 
 
+'''
 class ProfileSerializer(serializers.Serializer):
     phone_number = serializers.CharField(max_length=11)
     first_name = serializers.CharField(max_length=50)
@@ -17,3 +18,11 @@ class ProfileSerializer(serializers.Serializer):
         instance.last_name = validated_data.get('last_name')
         instance.save()
         return instance
+'''
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profiles
+        fields = '__all__'
+
