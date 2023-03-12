@@ -19,5 +19,7 @@ from django.urls import path
 from profiles import views
 
 urlpatterns = [
-    path('', views.profile_list, name='profile_list')
+    # path('', views.profile_list, name='profile_list')
+    path('', views.ProfileView.as_view(), name='ProfileView'),
+    path('<int:pk>/', views.ProfileRetrieve.as_view(), name='ProfileRetrieve')
 ]
