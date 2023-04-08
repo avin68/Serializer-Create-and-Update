@@ -7,6 +7,8 @@ from profiles.models import Profiles
 from profiles.serializers import ProfileSerializer
 from rest_framework import generics
 from mix.custom_generic_views import PartialUpdateAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.authentication import BaseAuthentication, SessionAuthentication, BasicAuthentication
 
 
 # @csrf_exempt
@@ -40,15 +42,25 @@ from mix.custom_generic_views import PartialUpdateAPIView
 #     queryset = Profiles.objects.all()
 
 
-# class ProfileView(generics.CreateAPIView):
+# class RetrieveProfileView(generics.RetrieveAPIView):
 #     serializer_class = ProfileSerializer
 #     queryset = Profiles.objects.all()
+#     permission_classes = (IsAuthenticated,)
+
+
+class RetrieveUpdateDestroyAPIViewProfile(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profiles.objects.all()
+    permission_classes = (IsAuthenticated,)
+
 
 class ProfileView(generics.ListCreateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profiles.objects.all()
+    permission_classes = (IsAdminUser,)
 
 
-class ProfileRetrieve(PartialUpdateAPIView):
+'''class ProfileRetrieve(PartialUpdateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profiles.objects.all()
+    '''

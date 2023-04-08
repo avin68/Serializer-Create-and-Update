@@ -21,5 +21,7 @@ from profiles import views
 urlpatterns = [
     # path('', views.profile_list, name='profile_list')
     path('', views.ProfileView.as_view(), name='ProfileView'),
-    path('<int:pk>/', views.ProfileRetrieve.as_view(), name='ProfileRetrieve')
+    # path('<int:pk>', views.RetrieveProfileView.as_view(), name='RetrieveProfileView'),
+    path('<int:pk>', views.RetrieveUpdateDestroyAPIViewProfile.as_view(), name='RetrieveUpdateDestroyAPIViewProfile')
+
 ]

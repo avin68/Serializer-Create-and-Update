@@ -25,7 +25,7 @@ class ProfileSerializer(serializers.Serializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    # posts = PostSerializer(many=True, read_only=True)
+    #postss = PostSerializer(many=True, read_only=True)
     posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     post = PostSerializer(write_only=True)
 
