@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 import re
 from rest_framework.exceptions import ValidationError
@@ -25,9 +27,10 @@ class ProfileSerializer(serializers.Serializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    #postss = PostSerializer(many=True, read_only=True)
+    # postss = PostSerializer(many=True, read_only=True)
     posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     post = PostSerializer(write_only=True)
+    user = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Profiles
@@ -40,7 +43,10 @@ class ProfileSerializer(serializers.ModelSerializer):
         raise ValidationError('ERROR!!!...')
 
     def create(self, validated_data):
+        user = validated_data.pop('user')
+        # user = User.objects.get(id = user)
+        user = get_object_or_404(User, pk=user)
         post = validated_data.pop('post')
-        profile = Profiles.objects.create(**validated_data)
+        profile = Profiles.objects.create(user=user, **validated_data)
         my_post = Posts.objects.create(**post, author=profile)
         return profile

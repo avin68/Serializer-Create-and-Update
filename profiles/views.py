@@ -3,6 +3,8 @@ from django.http import JsonResponse
 # from django.views.decorators.csrf import csrf_exempt
 # from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
+
+from mix.custome_permission import IsOwner
 from profiles.models import Profiles
 from profiles.serializers import ProfileSerializer
 from rest_framework import generics
@@ -51,13 +53,13 @@ from rest_framework.authentication import BaseAuthentication, SessionAuthenticat
 class RetrieveUpdateDestroyAPIViewProfile(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
     queryset = Profiles.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsOwner,)
 
 
 class ProfileView(generics.ListCreateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profiles.objects.all()
-    permission_classes = (IsAdminUser,)
+    permission_classes = (AllowAny,)
 
 
 '''class ProfileRetrieve(PartialUpdateAPIView):
